@@ -1,48 +1,30 @@
-import * as utils from '@dcl/ecs-scene-utils';
+import { createEntity, createVideoPlayer } from './utils';
 
-// set up static scene
-const scene = new Entity();
-scene.addComponentOrReplace(
-  new Transform({
-    position: new Vector3(64, 0, 64),
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
+// Grass
+createEntity({ position: new Vector3(72, 0, 64) }, 'models/grass.glb');
+
+// Light temple
+createEntity(
+  { position: new Vector3(92, 0, 64), rotation: Quaternion.Euler(0, 180, 0) },
+  'models/templeLight.glb'
 );
-const shape = new GLTFShape('models/valentinesDayScene.glb');
-shape.withCollisions = true;
-shape.isPointerBlocker = true;
-shape.visible = true;
-scene.addComponentOrReplace(shape);
 
-engine.addEntity(scene);
-
-const grass = new Entity();
-grass.addComponentOrReplace(
-  new Transform({
-    position: new Vector3(64, 0, 64),
-  })
+// Dark temple
+createEntity(
+  { position: new Vector3(52, 0, 64), rotation: Quaternion.Euler(0, 180, 0) },
+  'models/templeDark.glb'
 );
-const grassShape = new GLTFShape('models/grass.glb');
-grassShape.withCollisions = true;
-grassShape.isPointerBlocker = true;
-grassShape.visible = true;
-grass.addComponentOrReplace(grassShape);
 
-engine.addEntity(grass);
+// Video
+const videoClip = new VideoClip('videos/filmClub.mp4');
+createVideoPlayer(92, videoClip);
+createVideoPlayer(52, videoClip);
 
-// set up Github link
-const githubLink = new Entity();
-githubLink.addComponentOrReplace(
-  new Transform({
-    position: new Vector3(63.5, 1.3, 46.5),
-  })
+// Github link
+const githubLink = createEntity(
+  { position: new Vector3(71.5, 1.3, 48) },
+  'models/githubLink.glb'
 );
-const githubLinkShape = new GLTFShape('models/githubLink.glb');
-githubLinkShape.withCollisions = true;
-githubLinkShape.isPointerBlocker = true;
-githubLinkShape.visible = true;
-githubLink.addComponentOrReplace(githubLinkShape);
-
 githubLink.addComponent(
   new OnPointerDown(
     () =>
@@ -53,21 +35,11 @@ githubLink.addComponent(
   )
 );
 
-engine.addEntity(githubLink);
-
-// set up Twitter link
-const twitterLink = new Entity();
-twitterLink.addComponentOrReplace(
-  new Transform({
-    position: new Vector3(64.5, 1.3, 46.5),
-  })
+// Twitter link
+const twitterLink = createEntity(
+  { position: new Vector3(72.5, 1.3, 48) },
+  'models/twitterLink.glb'
 );
-const twitterLinkShape = new GLTFShape('models/twitterLink.glb');
-twitterLinkShape.withCollisions = true;
-twitterLinkShape.isPointerBlocker = true;
-twitterLinkShape.visible = true;
-twitterLink.addComponentOrReplace(twitterLinkShape);
-
 twitterLink.addComponent(
   new OnPointerDown(
     () =>
@@ -78,66 +50,115 @@ twitterLink.addComponent(
   )
 );
 
-engine.addEntity(twitterLink);
+// NPCs
+const skinColor = new Color4(
+  0.9490196108818054,
+  0.7607843279838562,
+  0.6470588445663452,
+  1
+);
+const whiteHairColor = new Color4(
+  0.8313725590705872,
+  0.8235576748847961,
+  0.8230588436126709,
+  1
+);
+const blackHairColor = new Color4(
+  0.10980392247438431,
+  0.10877176374197006,
+  0.10870588570833206,
+  1
+);
 
-// set up video
-const videoClip = new VideoClip('videos/filmClub.mp4');
-const videoTexture = new VideoTexture(videoClip);
-videoTexture.loop = true;
-
-const videoMaterial = new Material();
-videoMaterial.albedoTexture = videoTexture;
-videoMaterial.roughness = 1;
-videoMaterial.specularIntensity = 0;
-videoMaterial.metallic = 0;
-
-const screen = new Entity();
-screen.addComponent(new PlaneShape());
-screen.addComponent(
+const npc1 = new Entity();
+const npcShape1 = new AvatarShape();
+npc1.addComponent(npcShape1);
+npc1.addComponent(
   new Transform({
-    position: new Vector3(64, 2.54, 72.9),
-    rotation: Quaternion.Euler(0, 180, 0),
-    scale: new Vector3(2.2, 1.2, 1),
+    position: new Vector3(91, 0.8, 64),
+    rotation: Quaternion.Euler(0, 150, 0),
   })
 );
-screen.addComponent(videoMaterial);
-screen.addComponent(
-  new OnPointerDown(
-    () => {
-      videoTexture.playing = !videoTexture.playing;
-      screen.getComponent(OnPointerDown).hoverText = videoTexture.playing
-        ? 'Stop'
-        : 'Play';
-    },
-    { hoverText: videoTexture.playing ? 'Stop' : 'Play' }
-  )
-);
-engine.addEntity(screen);
+npcShape1.bodyShape = 'urn:decentraland:off-chain:base-avatars:BaseFemale';
+npcShape1.skinColor = skinColor;
+npcShape1.hairColor = whiteHairColor;
+npcShape1.wearables = [
+  'urn:decentraland:matic:collections-v2:0x189e481389dec43d33c735712b5f1fa4b2c9dd63:0',
+  'urn:decentraland:matic:collections-v2:0xf370aea38d9f4462236807b68d20c57fc814e1e9:0',
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:0',
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:1',
+  'urn:decentraland:matic:collections-v2:0x956b8d57066fc3d2562de22efd63624a1ba56e35:12',
+];
+npcShape1.name = 'NPC';
+npcShape1.expressionTriggerId = 'robot';
+engine.addEntity(npc1);
 
-// create trigger box
-const box = new Entity();
-const boxShape = new BoxShape();
-boxShape.withCollisions = false;
-boxShape.visible = false;
-boxShape.isPointerBlocker = false;
-
-box.addComponent(boxShape);
-box.addComponent(new Transform({ position: new Vector3(64, 2, 71) }));
-
-const triggerBox = new utils.TriggerBoxShape(new Vector3(7, 3, 7));
-
-box.addComponent(
-  new utils.TriggerComponent(triggerBox, {
-    onCameraEnter: () => {
-      if (!videoTexture.playing) {
-        videoTexture.playing = true;
-        screen.getComponent(OnPointerDown).hoverText = videoTexture.playing
-          ? 'Stop'
-          : 'Play';
-      }
-      box.getComponent(utils.TriggerComponent).enabled = false;
-    },
+const npc2 = new Entity();
+const npcShape2 = new AvatarShape();
+npc2.addComponent(npcShape2);
+npc2.addComponent(
+  new Transform({
+    position: new Vector3(93, 0.8, 64),
+    rotation: Quaternion.Euler(0, 210, 0),
   })
 );
+npcShape2.bodyShape = 'urn:decentraland:off-chain:base-avatars:BaseMale';
+npcShape2.skinColor = skinColor;
+npcShape2.hairColor = whiteHairColor;
+npcShape2.wearables = [
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:0',
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:1',
+  'urn:decentraland:matic:collections-v2:0x956b8d57066fc3d2562de22efd63624a1ba56e35:12',
+  'urn:decentraland:matic:collections-v2:0x956b8d57066fc3d2562de22efd63624a1ba56e35:17',
+  'urn:decentraland:matic:collections-v2:0x1091adb899c73075af0e5742d2aa24fd35a7cefd:0',
+];
+npcShape2.name = 'NPC';
+npcShape2.expressionTriggerId = 'robot';
+engine.addEntity(npc2);
 
-engine.addEntity(box);
+const npc3 = new Entity();
+const npcShape3 = new AvatarShape();
+npc3.addComponent(npcShape3);
+npc3.addComponent(
+  new Transform({
+    position: new Vector3(51, 0.8, 64),
+    rotation: Quaternion.Euler(0, 150, 0),
+  })
+);
+npcShape3.bodyShape = 'urn:decentraland:off-chain:base-avatars:BaseFemale';
+npcShape3.skinColor = skinColor;
+npcShape3.hairColor = blackHairColor;
+npcShape3.wearables = [
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:3',
+  'urn:decentraland:matic:collections-v2:0x189e481389dec43d33c735712b5f1fa4b2c9dd63:0',
+  'urn:decentraland:matic:collections-v2:0xf370aea38d9f4462236807b68d20c57fc814e1e9:0',
+  'urn:decentraland:matic:collections-v2:0x1091adb899c73075af0e5742d2aa24fd35a7cefd:0',
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:2',
+  'urn:decentraland:off-chain:base-avatars:sport_black_shoes',
+];
+npcShape3.name = 'NPC';
+npcShape3.expressionTriggerId = 'robot';
+engine.addEntity(npc3);
+
+const npc4 = new Entity();
+const npcShape4 = new AvatarShape();
+npc4.addComponent(npcShape4);
+npc4.addComponent(
+  new Transform({
+    position: new Vector3(53, 0.8, 64),
+    rotation: Quaternion.Euler(0, 210, 0),
+  })
+);
+npcShape4.bodyShape = 'urn:decentraland:off-chain:base-avatars:BaseMale';
+npcShape4.skinColor = skinColor;
+npcShape4.hairColor = blackHairColor;
+npcShape4.wearables = [
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:3',
+  'urn:decentraland:matic:collections-v2:0x956b8d57066fc3d2562de22efd63624a1ba56e35:17',
+  'urn:decentraland:matic:collections-v2:0x1091adb899c73075af0e5742d2aa24fd35a7cefd:0',
+  'urn:decentraland:matic:collections-v2:0x487f7cc519dcffe91311b77d15ca7bc4a8f24991:2',
+  'urn:decentraland:off-chain:base-avatars:sport_black_shoes',
+];
+npcShape4.name = 'NPC';
+npcShape4.expressionTriggerId = 'robot';
+engine.addEntity(npc4);
