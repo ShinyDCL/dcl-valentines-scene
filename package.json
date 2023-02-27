@@ -1,7 +1,7 @@
 {
-  "name": "Valentines day scene",
+  "name": "valentines-day-scene",
   "version": "1.0.0",
-  "description": "Valentines day scene",
+  "description": "Valentines day scene for DCL",
   "scripts": {
     "start": "dcl start",
     "build": "build-ecs",
