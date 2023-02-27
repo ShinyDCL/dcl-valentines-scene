@@ -26,10 +26,7 @@ export const setUpScene = (): void => {
   );
   githubLink.addComponent(
     new OnPointerDown(
-      () =>
-        openExternalURL(
-          'https://github.com/ShinyDCL/sandstorm-contests/tree/main/models/contest12'
-        ),
+      () => openExternalURL('https://github.com/ShinyDCL/valentines-scene'),
       { hoverText: 'Github' }
     )
   );
