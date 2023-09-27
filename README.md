@@ -1,33 +1,32 @@
 # Decentraland scene
 
 This project contains Valentines Day scene created for Sandstorm's Decentraland contest #12 - Temple of Love.
-Later refined to include dark version of temple.
 
-![Light temple from outside](screenshots/temple-light-outside.png)
-![Light temple from inside](screenshots/temple-light-inside.png)
-![Dark temple from outside](screenshots/temple-dark-outside.png)
-![Dark temple from inside](screenshots/temple-dark-inside.png)
+Currently deployed under Decentraland name `Shiny`. Follow [this link](https://play.decentraland.org/?realm=shiny.dcl.eth) or type in the Decentraland chatbox `/changerealm shiny.dcl.eth` to visit the scene. This scene is built with the SDK7.
+
+Skyboxes generated using Blockade Labs [Skybox AI tool](https://skybox.blockadelabs.com/) licensed under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)
+
+![Light temple from outside](screenshots/temple-light-outside.jpg)
+![Light temple from inside](screenshots/temple-light-inside.jpg)
+![Dark temple from outside](screenshots/temple-dark-outside.jpg)
+![Dark temple from inside](screenshots/temple-dark-inside.jpg)
 
 ## 3D models
 
-All of the 3D models have been created by me, with the exception of default grass, Github and Twitter links, which are from Decentraland Builder.
+All of the 3D models have been created by me, except Github and Twitter links, which are from Decentraland Builder.
 
 Textures used in 3D models and their sources:
 
 - Color palette from Decentraland builder
-- Light marble for building: <a href="https://ambientcg.com/view?id=Marble019">ambientCG</a>
-- Light pavement for ground: <a href="https://ambientcg.com/view?id=PavingStones125A">ambientCG</a>
-- Light fabric (carpet) for platforms: <a href="https://ambientcg.com/view?id=Fabric062">ambientCG</a>
-- Light chip texture for glass: <a href="https://ambientcg.com/view?id=Chip006">ambientCG</a>
-- Dark marble for building: <a href="https://ambientcg.com/view?id=Marble016">ambientCG</a>
-- Dark pavement for ground: <a href="https://ambientcg.com/view?id=Tiles045">ambientCG</a>
-- Dark fabric (carpet) for platforms: <a href="https://ambientcg.com/view?id=Fabric042">ambientCG</a>
-- Dark chip texture for glass: <a href="https://ambientcg.com/view?id=Chip001">ambientCG</a>
+- Light marble for building: [ambientCG](https://ambientcg.com/view?id=Marble019). AmbientCG has a nice selection of textures under [Creative Commons CC0 1.0 Universal License](https://docs.ambientcg.com/license/)
+- Light pavement for ground:[ambientCG](https://ambientcg.com/view?id=PavingStones125A)
+- Light fabric (carpet) for platforms: [ambientCG](https://ambientcg.com/view?id=Fabric062)
+- Dark marble for building: [ambientCG](https://ambientcg.com/view?id=Marble016)
+- Dark pavement for ground: [ambientCG](https://ambientcg.com/view?id=Tiles045)
+- Dark fabric (carpet) for platforms: [ambientCG](https://ambientcg.com/view?id=Fabric042)
 - Images used as textures for plant leaves, keyboard, cookies and flowers generated using Midjourney AI
 
 ## Try it out
-
-**Previewing the scene**
 
 1. Download this repository.
 
