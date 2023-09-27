@@ -7,8 +7,8 @@ export enum LinkType {
 }
 
 export const URLS: Record<LinkType, string> = {
-  [LinkType.GITHUB]: 'https://github.com/ShinyDCL/valentines-scene',
-  [LinkType.TWITTER]: 'https://twitter.com/ShinyDCL/status/1598760892962721792'
+  [LinkType.GITHUB]: 'https://github.com/ShinyDCL/dcl-valentines-scene',
+  [LinkType.TWITTER]: 'https://twitter.com/ShinyDCL/status/1625121692837109760'
 } as const
 
 export const LINK_MODELS: Record<LinkType, string> = {
@@ -29,6 +29,6 @@ export const createLinkEntity = (transform: Partial<TransformType>, linkType: Li
 }
 
 export const setupLinks = (parent: Entity): void => {
-  createLinkEntity({ position: { x: 6, y: 1.3, z: 7 }, parent }, LinkType.GITHUB)
-  createLinkEntity({ position: { x: 5, y: 1.3, z: 7 }, parent }, LinkType.TWITTER)
+  createLinkEntity({ position: { x: 7, y: 1.3, z: 12 }, parent }, LinkType.GITHUB)
+  createLinkEntity({ position: { x: 6, y: 1.3, z: 12 }, parent }, LinkType.TWITTER)
 }
