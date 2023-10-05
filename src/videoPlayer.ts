@@ -1,14 +1,14 @@
 import {
+  engine,
   Entity,
   InputAction,
   Material,
   MeshCollider,
   MeshRenderer,
   PointerEvents,
+  pointerEventsSystem,
   Transform,
-  VideoPlayer,
-  engine,
-  pointerEventsSystem
+  VideoPlayer
 } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 

@@ -13,7 +13,14 @@
 		"email": "citrons915@gmail.com"
 	},
 	"main": "bin/index.js",
-	"tags": [],
+	"tags": [
+		"Valentines",
+		"Romantic",
+		"Love",
+		"Sweet",
+		"Pastel",
+		"Pink"
+	],
 	"scene": {
 		"parcels": [
 			"0,0",

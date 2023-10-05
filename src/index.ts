@@ -1,9 +1,10 @@
-import { setupLinks } from './links'
-import { setUpVideoPlayer } from './videoPlayer'
-import { setUpScene } from './scene'
+import { engine, Transform } from '@dcl/sdk/ecs'
 import { Vector3 } from '@dcl/sdk/math'
+
 import { SCENE_MIDDLE } from './config'
-import { Transform, engine } from '@dcl/sdk/ecs'
+import { setupLinks } from './links'
+import { setUpScene } from './scene'
+import { setUpVideoPlayer } from './videoPlayer'
 
 export function main() {
   const root = engine.addEntity()

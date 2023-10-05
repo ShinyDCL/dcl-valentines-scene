@@ -1,7 +1,8 @@
-import { Entity, GltfContainer, InputAction, Transform, engine, pointerEventsSystem } from '@dcl/sdk/ecs'
-import { setUpSkyBox } from './skyBox'
+import { AudioSource, engine, Entity, GltfContainer, InputAction, pointerEventsSystem, Transform } from '@dcl/sdk/ecs'
 import { Vector3 } from '@dcl/sdk/math'
-import { hideEntity, showEntity } from './utils'
+
+import { setUpSkyBox } from './skyBox'
+import { hideEntity, playSound, showEntity } from './utils'
 
 enum Theme {
   Light = 'Light',
@@ -40,6 +41,7 @@ export const setUpScene = (parent: Entity) => {
       opts: { button: InputAction.IA_POINTER, hoverText: 'Change!' }
     },
     () => {
+      playSound(buttonLight)
       hideEntity(sceneLight)
       showEntity(sceneDark)
       currentTheme = Theme.Dark
@@ -52,6 +54,7 @@ export const setUpScene = (parent: Entity) => {
       opts: { button: InputAction.IA_POINTER, hoverText: 'Change!' }
     },
     () => {
+      playSound(buttonDark)
       hideEntity(sceneDark)
       showEntity(sceneLight)
       currentTheme = Theme.Light
@@ -75,6 +78,12 @@ const createScene = (parent: Entity, theme: Theme, visible: boolean): { scene: E
   const button = engine.addEntity()
   Transform.create(button, { parent: scene, position: Vector3.create(0, 2, 0) })
   GltfContainer.create(button, { src: buttonModels[theme] })
+
+  AudioSource.create(button, {
+    audioClipUrl: 'sounds/click.mp3',
+    playing: false,
+    loop: false
+  })
 
   setUpSkyBox(scene, skyBoxFolders[theme])
 
