@@ -11,8 +11,8 @@
     "upgrade-dcl-deps": "npm install --save-dev @dcl/sdk@latest @dcl/js-runtime@latest"
   },
   "devDependencies": {
-    "@dcl/js-runtime": "7.3.18",
-    "@dcl/sdk": "^7.3.18"
+    "@dcl/js-runtime": "7.3.35",
+    "@dcl/sdk": "^7.3.35"
   },
   "engines": {
     "node": ">=16.0.0",

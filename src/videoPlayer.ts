@@ -1,18 +1,9 @@
-import {
-  engine,
-  Entity,
-  InputAction,
-  Material,
-  MeshCollider,
-  MeshRenderer,
-  PointerEvents,
-  pointerEventsSystem,
-  Transform,
-  VideoPlayer
-} from '@dcl/sdk/ecs'
+import { engine, Entity, Material, MeshCollider, MeshRenderer, Transform, VideoPlayer } from '@dcl/sdk/ecs'
 import { Quaternion, Vector3 } from '@dcl/sdk/math'
 
-export const setUpVideoPlayer = (parent: Entity) => {
+import { addInteraction, toggleVideo, updateButtonFeedback } from './utils'
+
+export const setUpVideoPlayer = (parent: Entity): Entity => {
   const screen = engine.addEntity()
   MeshRenderer.setPlane(screen)
   MeshCollider.setPlane(screen)
@@ -39,19 +30,10 @@ export const setUpVideoPlayer = (parent: Entity) => {
     metallic: 0
   })
 
-  pointerEventsSystem.onPointerDown(
-    {
-      entity: screen,
-      opts: { button: InputAction.IA_POINTER, hoverText: 'Play!' }
-    },
-    function () {
-      const videoPlayer = VideoPlayer.getMutable(screen)
-      videoPlayer.playing = !videoPlayer.playing
+  addInteraction(screen, 'Play!', () => {
+    const isPlaying = toggleVideo(screen)
+    updateButtonFeedback(screen, isPlaying ? 'Stop!' : 'Play!')
+  })
 
-      const hoverFeedback = PointerEvents.getMutable(screen)
-      if (hoverFeedback?.pointerEvents?.[0]?.eventInfo) {
-        hoverFeedback.pointerEvents[0].eventInfo.hoverText = videoPlayer.playing ? 'Stop!' : 'Play!'
-      }
-    }
-  )
+  return screen
 }

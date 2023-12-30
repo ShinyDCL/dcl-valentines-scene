@@ -14,12 +14,8 @@
 	},
 	"main": "bin/index.js",
 	"tags": [
-		"Valentines",
-		"Romantic",
-		"Love",
-		"Sweet",
-		"Pastel",
-		"Pink"
+		"art",
+		"social"
 	],
 	"scene": {
 		"parcels": [

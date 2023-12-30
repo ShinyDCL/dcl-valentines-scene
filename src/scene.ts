@@ -1,8 +1,8 @@
-import { AudioSource, engine, Entity, GltfContainer, InputAction, pointerEventsSystem, Transform } from '@dcl/sdk/ecs'
+import { AudioSource, engine, Entity, GltfContainer, Transform } from '@dcl/sdk/ecs'
 import { Vector3 } from '@dcl/sdk/math'
 
 import { setUpSkyBox } from './skyBox'
-import { hideEntity, playSound, showEntity } from './utils'
+import { addInteraction, hideEntity, playSound, showEntity } from './utils'
 
 enum Theme {
   Light = 'Light',
@@ -30,36 +30,20 @@ const skyBoxFolders: Record<Theme, string> = {
 } as const
 
 export const setUpScene = (parent: Entity) => {
-  let currentTheme = Theme.Light
-
   const { scene: sceneLight, button: buttonLight } = createScene(parent, Theme.Light, true)
   const { scene: sceneDark, button: buttonDark } = createScene(parent, Theme.Dark, false)
 
-  pointerEventsSystem.onPointerDown(
-    {
-      entity: buttonLight,
-      opts: { button: InputAction.IA_POINTER, hoverText: 'Change!' }
-    },
-    () => {
-      playSound(buttonLight)
-      hideEntity(sceneLight)
-      showEntity(sceneDark)
-      currentTheme = Theme.Dark
-    }
-  )
+  addInteraction(buttonLight, 'Change!', () => {
+    playSound(buttonLight)
+    hideEntity(sceneLight)
+    showEntity(sceneDark)
+  })
 
-  pointerEventsSystem.onPointerDown(
-    {
-      entity: buttonDark,
-      opts: { button: InputAction.IA_POINTER, hoverText: 'Change!' }
-    },
-    () => {
-      playSound(buttonDark)
-      hideEntity(sceneDark)
-      showEntity(sceneLight)
-      currentTheme = Theme.Light
-    }
-  )
+  addInteraction(buttonDark, 'Change!', () => {
+    playSound(buttonDark)
+    hideEntity(sceneDark)
+    showEntity(sceneLight)
+  })
 }
 
 const createScene = (parent: Entity, theme: Theme, visible: boolean): { scene: Entity; button: Entity } => {
