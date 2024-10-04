@@ -1,16 +1,22 @@
-import { AudioSource, AvatarAnchorPointType, AvatarAttach, engine, Entity } from '@dcl/sdk/ecs'
+import { AudioSource, engine, Entity, Transform } from '@dcl/sdk/ecs'
 
+const backgroundMusic = 'sounds/backgroundMusic.mp3'
+
+/*
+ * Creates an audio entity and attaches it to camera entity.
+ */
 export const setUpMusic = (): Entity => {
-  // Attach entity with audio to player
   const audioEntity = engine.addEntity()
+
   AudioSource.create(audioEntity, {
-    audioClipUrl: 'sounds/backgroundMusic.mp3',
+    audioClipUrl: backgroundMusic,
     loop: true,
-    playing: true
+    playing: true,
+    volume: 0.8
   })
 
-  AvatarAttach.create(audioEntity, {
-    anchorPointId: AvatarAnchorPointType.AAPT_NAME_TAG
+  Transform.create(audioEntity, {
+    parent: engine.CameraEntity
   })
 
   return audioEntity

@@ -3,10 +3,14 @@ import { Quaternion, Vector3 } from '@dcl/sdk/math'
 
 import { addInteraction, toggleVideo, updateButtonFeedback } from './utils'
 
+/*
+ * Sets up a video player with a plane screen.
+ */
 export const setUpVideoPlayer = (parent: Entity): Entity => {
   const screen = engine.addEntity()
   MeshRenderer.setPlane(screen)
   MeshCollider.setPlane(screen)
+
   Transform.create(screen, {
     position: Vector3.create(0, 2.54, -8.91),
     scale: Vector3.create(2.2, 1.2, 1),

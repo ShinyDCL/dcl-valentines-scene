@@ -3,65 +3,69 @@ import { Quaternion, Vector3 } from '@dcl/sdk/math'
 
 import { SCENE_MIDDLE, SCENE_SIZE } from './config'
 
-export const setUpSkyBox = (parent: Entity, folderPath: string): Entity => {
-  const defaultScale = Vector3.create(SCENE_SIZE, SCENE_MIDDLE, SCENE_SIZE)
+const defaultScale = Vector3.create(SCENE_SIZE, SCENE_MIDDLE, SCENE_SIZE)
+const defaultRotation = Quaternion.Identity()
 
+/*
+ * Creates a skybox around the scene.
+ */
+export const setUpSkyBox = (parent: Entity, folderPath: string): Entity => {
   const skyBoxRoot = engine.addEntity()
   Transform.create(skyBoxRoot, { position: Vector3.create(0, SCENE_MIDDLE / 2, 0), parent })
 
-  // Front
-  const skyBoxPZ = engine.addEntity()
-  Transform.create(skyBoxPZ, {
-    position: Vector3.create(0, 0, SCENE_MIDDLE),
-    scale: defaultScale,
-    parent: skyBoxRoot
-  })
-  MeshRenderer.setPlane(skyBoxPZ)
-  Material.setBasicMaterial(skyBoxPZ, { texture: Material.Texture.Common({ src: `${folderPath}/pz.jpg` }) })
+  // Front (PZ) face
+  createFace(skyBoxRoot, `${folderPath}/pz.jpg`, Vector3.create(0, 0, SCENE_MIDDLE))
 
-  // Back
-  const skyBoxNZ = engine.addEntity()
-  Transform.create(skyBoxNZ, {
-    position: Vector3.create(0, 0, -SCENE_MIDDLE),
-    rotation: Quaternion.fromEulerDegrees(0, 180, 0),
-    scale: defaultScale,
-    parent: skyBoxRoot
-  })
-  MeshRenderer.setPlane(skyBoxNZ)
-  Material.setBasicMaterial(skyBoxNZ, { texture: Material.Texture.Common({ src: `${folderPath}/nz.jpg` }) })
+  // Back (NZ) face
+  createFace(
+    skyBoxRoot,
+    `${folderPath}/nz.jpg`,
+    Vector3.create(0, 0, -SCENE_MIDDLE),
+    Quaternion.fromEulerDegrees(0, 180, 0)
+  )
 
-  // Right
-  const skyBoxPX = engine.addEntity()
-  Transform.create(skyBoxPX, {
-    position: Vector3.create(SCENE_MIDDLE, 0, 0),
-    rotation: Quaternion.fromEulerDegrees(0, 90, 0),
-    scale: defaultScale,
-    parent: skyBoxRoot
-  })
-  MeshRenderer.setPlane(skyBoxPX)
-  Material.setBasicMaterial(skyBoxPX, { texture: Material.Texture.Common({ src: `${folderPath}/px.jpg` }) })
+  // Right (PX) face
+  createFace(
+    skyBoxRoot,
+    `${folderPath}/px.jpg`,
+    Vector3.create(SCENE_MIDDLE, 0, 0),
+    Quaternion.fromEulerDegrees(0, 90, 0)
+  )
 
-  // Left
-  const skyBoxNX = engine.addEntity()
-  Transform.create(skyBoxNX, {
-    position: Vector3.create(-SCENE_MIDDLE, 0, 0),
-    rotation: Quaternion.fromEulerDegrees(0, -90, 0),
-    scale: defaultScale,
-    parent: skyBoxRoot
-  })
-  MeshRenderer.setPlane(skyBoxNX)
-  Material.setBasicMaterial(skyBoxNX, { texture: Material.Texture.Common({ src: `${folderPath}/nx.jpg` }) })
+  // Left (NX) face
+  createFace(
+    skyBoxRoot,
+    `${folderPath}/nx.jpg`,
+    Vector3.create(-SCENE_MIDDLE, 0, 0),
+    Quaternion.fromEulerDegrees(0, -90, 0)
+  )
 
-  // Top
-  const skyBoxPY = engine.addEntity()
-  Transform.create(skyBoxPY, {
-    position: Vector3.create(0, SCENE_MIDDLE / 2, 0),
-    rotation: Quaternion.fromEulerDegrees(-90, 0, 0),
-    scale: Vector3.create(SCENE_SIZE, SCENE_SIZE, SCENE_SIZE),
-    parent: skyBoxRoot
-  })
-  MeshRenderer.setPlane(skyBoxPY)
-  Material.setBasicMaterial(skyBoxPY, { texture: Material.Texture.Common({ src: `${folderPath}/py.jpg` }) })
+  // Top (PY) face
+  createFace(
+    skyBoxRoot,
+    `${folderPath}/py.jpg`,
+    Vector3.create(0, SCENE_MIDDLE / 2, 0),
+    Quaternion.fromEulerDegrees(-90, 0, 0),
+    Vector3.create(SCENE_SIZE, SCENE_SIZE, SCENE_SIZE)
+  )
 
   return skyBoxRoot
+}
+
+/*
+ * Creates a skybox face.
+ */
+const createFace = (
+  parent: Entity,
+  textureSrc: string,
+  position: Vector3,
+  rotation: Quaternion = defaultRotation,
+  scale: Vector3 = defaultScale
+): Entity => {
+  const face = engine.addEntity()
+  Transform.create(face, { position, rotation, scale, parent })
+  MeshRenderer.setPlane(face)
+  Material.setBasicMaterial(face, { texture: Material.Texture.Common({ src: textureSrc }) })
+
+  return face
 }
